@@ -1,0 +1,82 @@
+return {
+  {
+    "rebelot/heirline.nvim",
+    opts = function(_, opts)
+      opts.tabline = nil
+      opts.winbar = nil
+    end,
+  },
+  {
+    "akinsho/bufferline.nvim",
+    event = "VeryLazy",
+    version = "*",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      options = {
+        mode = "buffers",
+        numbers = function(opts) return ("%s "):format(opts.ordinal) end,
+        close_command = "bdelete! %d",
+        right_mouse_command = "bdelete! %d",
+        left_mouse_command = "buffer %d",
+        middle_mouse_command = nil,
+        indicator = {
+          style = "none",
+        },
+        buffer_close_icon = "",
+        modified_icon = "●",
+        close_icon = "X",
+        left_trunc_marker = "",
+        right_trunc_marker = "",
+        max_name_length = 40,
+        max_prefix_length = 18,
+        truncate_names = true,
+        tab_size = 26,
+        diagnostics = false,
+        diagnostics_update_in_insert = false,
+        name_formatter = function(buf)
+          local path = vim.fn.fnamemodify(buf.path, ":.")
+          return (path ~= "" and path ~= ".") and path or buf.name
+        end,
+        offsets = {
+          {
+            filetype = "neo-tree",
+            text = "EXPLORER",
+            text_align = "left",
+            separator = false,
+            highlight = "Directory",
+          },
+        },
+        color_icons = false,
+        show_buffer_icons = false,
+        show_buffer_close_icons = false,
+        show_close_icon = true,
+        show_tab_indicators = false,
+        show_duplicate_prefix = true,
+        separator_style = { "", "" },
+        enforce_regular_tabs = false,
+        always_show_bufferline = true,
+        hover = {
+          enabled = true,
+          delay = 150,
+          reveal = { "close" },
+        },
+      },
+      highlights = {
+        fill = { bg = "#2b353d" },
+        background = { bg = "#2b353d", fg = "#92a0ac" },
+        buffer_visible = { bg = "#2b353d", fg = "#a8b4be" },
+        buffer_selected = { bg = "#5b9fc9", fg = "#f3f7fa", bold = true },
+        separator = { bg = "#2b353d", fg = "#2b353d" },
+        separator_visible = { bg = "#2b353d", fg = "#2b353d" },
+        separator_selected = { bg = "#2b353d", fg = "#2b353d" },
+        indicator_selected = { fg = "#5b9fc9", bg = "#5b9fc9" },
+        modified = { fg = "#dcb36c", bg = "#2b353d" },
+        modified_visible = { fg = "#dcb36c", bg = "#2b353d" },
+        modified_selected = { fg = "#ffe39d", bg = "#5b9fc9" },
+        close_button = { bg = "#2b353d", fg = "#d8eef8" },
+        close_button_visible = { bg = "#2b353d", fg = "#d8eef8" },
+        close_button_selected = { bg = "#5b9fc9", fg = "#f3f7fa" },
+      },
+    },
+  },
+}
