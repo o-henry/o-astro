@@ -5,9 +5,20 @@ return {
     opts = {
       colorscheme = "vscode",
       status = {
+        providers = {
+          filename = {
+            fname = function(bufnr) return vim.api.nvim_buf_get_name(bufnr):lower() end,
+          },
+        },
         components = {
           git_branch = {
-            git_branch = { icon = false },
+            git_branch = { icon = { kind = "NONE", padding = { right = 0 } } },
+          },
+          separated_path = {
+            path_func = function(self)
+              local path = require("astroui.status").provider.unique_path()(self)
+              return path == "" and path or path:lower()
+            end,
           },
         },
       },

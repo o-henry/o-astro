@@ -20,7 +20,8 @@ return {
         left_mouse_command = "buffer %d",
         middle_mouse_command = nil,
         indicator = {
-          style = "none",
+          style = "icon",
+          icon = "",
         },
         buffer_close_icon = "",
         modified_icon = "●",
@@ -30,13 +31,10 @@ return {
         max_name_length = 40,
         max_prefix_length = 18,
         truncate_names = true,
-        tab_size = 26,
+        tab_size = 1,
         diagnostics = false,
         diagnostics_update_in_insert = false,
-        name_formatter = function(buf)
-          local path = vim.fn.fnamemodify(buf.path, ":.")
-          return (path ~= "" and path ~= ".") and path or buf.name
-        end,
+        name_formatter = function(buf) return buf.name:lower() end,
         offsets = {
           {
             filetype = "neo-tree",
