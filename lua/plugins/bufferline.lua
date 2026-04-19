@@ -49,7 +49,7 @@ return {
         show_buffer_close_icons = false,
         show_close_icon = true,
         show_tab_indicators = false,
-        show_duplicate_prefix = true,
+        show_duplicate_prefix = false,
         separator_style = { "", "" },
         enforce_regular_tabs = false,
         always_show_bufferline = true,

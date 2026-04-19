@@ -32,7 +32,7 @@ return {
         wrap = false,
         pumblend = 10,
         winblend = 0,
-        cmdheight = 0,
+        cmdheight = 1,
         colorcolumn = "120",
         fillchars = {
           eob = " ",
