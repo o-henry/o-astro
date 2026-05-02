@@ -34,7 +34,7 @@ return {
         tab_size = 1,
         diagnostics = false,
         diagnostics_update_in_insert = false,
-        name_formatter = function(buf) return buf.name:lower() end,
+        name_formatter = function(buf) return " " .. buf.name:lower() end,
         offsets = {
           {
             filetype = "neo-tree",
