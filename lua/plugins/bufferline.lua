@@ -63,7 +63,7 @@ return {
         fill = { bg = "#2b353d" },
         background = { bg = "#2b353d", fg = "#92a0ac" },
         buffer_visible = { bg = "#2b353d", fg = "#a8b4be" },
-        buffer_selected = { bg = "#5b9fc9", fg = "#f3f7fa", bold = true },
+        buffer_selected = { bg = "#5b9fc9", fg = "#f3f7fa", bold = false, italic = false },
         separator = { bg = "#2b353d", fg = "#2b353d" },
         separator_visible = { bg = "#2b353d", fg = "#2b353d" },
         separator_selected = { bg = "#2b353d", fg = "#2b353d" },
