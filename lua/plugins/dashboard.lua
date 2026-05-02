@@ -161,6 +161,9 @@ return {
           files = {
             enabled = false,
           },
+          ui = {
+            live = "",
+          },
         },
         layout = {
           config = function(layout)
