@@ -2,6 +2,23 @@
 return {
   {
     "folke/snacks.nvim",
+    init = function()
+      local function set_dashboard_highlights()
+        local desc = vim.api.nvim_get_hl(0, { name = "SnacksDashboardDesc", link = false })
+        local key = vim.api.nvim_get_hl(0, { name = "SnacksDashboardKey", link = false })
+
+        desc.underline = true
+        key.underline = true
+
+        vim.api.nvim_set_hl(0, "AstroDashboardAction", desc)
+        vim.api.nvim_set_hl(0, "AstroDashboardActionKey", key)
+      end
+
+      vim.schedule(set_dashboard_highlights)
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        callback = function() vim.schedule(set_dashboard_highlights) end,
+      })
+    end,
     opts = {
       dashboard = {
         width = 72,
@@ -31,19 +48,15 @@ return {
           end,
         },
         preset = {
-          header = table.concat({
-            "┌──────────────────────────────┐",
-            "│          ASTRO NVIM          │",
-            "└──────────────────────────────┘",
-          }, "\n"),
+          header = "ASTRO",
           keys = {
             {
               key = "n",
               action = ":ene | startinsert",
               align = "center",
               text = {
-                { "NEW FILE", hl = "SnacksDashboardDesc", width = 18 },
-                { "[N]", hl = "SnacksDashboardKey" },
+                { "NEW FILE", hl = "AstroDashboardAction", width = 18 },
+                { "[N]", hl = "AstroDashboardActionKey" },
               },
             },
             {
@@ -51,8 +64,8 @@ return {
               action = ":lua Snacks.dashboard.pick('files')",
               align = "center",
               text = {
-                { "FIND FILE", hl = "SnacksDashboardDesc", width = 18 },
-                { "[F]", hl = "SnacksDashboardKey" },
+                { "FIND FILE", hl = "AstroDashboardAction", width = 18 },
+                { "[F]", hl = "AstroDashboardActionKey" },
               },
             },
             {
@@ -60,8 +73,8 @@ return {
               action = ":lua Snacks.dashboard.pick('live_grep')",
               align = "center",
               text = {
-                { "FIND TEXT", hl = "SnacksDashboardDesc", width = 18 },
-                { "[G]", hl = "SnacksDashboardKey" },
+                { "FIND TEXT", hl = "AstroDashboardAction", width = 18 },
+                { "[G]", hl = "AstroDashboardActionKey" },
               },
             },
             {
@@ -69,8 +82,8 @@ return {
               action = ":lua Snacks.dashboard.pick('oldfiles')",
               align = "center",
               text = {
-                { "RECENT FILES", hl = "SnacksDashboardDesc", width = 18 },
-                { "[R]", hl = "SnacksDashboardKey" },
+                { "RECENT FILES", hl = "AstroDashboardAction", width = 18 },
+                { "[R]", hl = "AstroDashboardActionKey" },
               },
             },
             {
@@ -78,8 +91,8 @@ return {
               action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
               align = "center",
               text = {
-                { "CONFIG", hl = "SnacksDashboardDesc", width = 18 },
-                { "[C]", hl = "SnacksDashboardKey" },
+                { "CONFIG", hl = "AstroDashboardAction", width = 18 },
+                { "[C]", hl = "AstroDashboardActionKey" },
               },
             },
             {
@@ -87,8 +100,8 @@ return {
               section = "session",
               align = "center",
               text = {
-                { "RESTORE SESSION", hl = "SnacksDashboardDesc", width = 18 },
-                { "[S]", hl = "SnacksDashboardKey" },
+                { "RESTORE SESSION", hl = "AstroDashboardAction", width = 18 },
+                { "[S]", hl = "AstroDashboardActionKey" },
               },
             },
             {
@@ -97,8 +110,8 @@ return {
               enabled = package.loaded.lazy ~= nil,
               align = "center",
               text = {
-                { "PLUGIN MANAGER", hl = "SnacksDashboardDesc", width = 18 },
-                { "[L]", hl = "SnacksDashboardKey" },
+                { "PLUGIN MANAGER", hl = "AstroDashboardAction", width = 18 },
+                { "[L]", hl = "AstroDashboardActionKey" },
               },
             },
             {
@@ -106,28 +119,27 @@ return {
               action = ":qa",
               align = "center",
               text = {
-                { "QUIT", hl = "SnacksDashboardDesc", width = 18 },
-                { "[Q]", hl = "SnacksDashboardKey" },
+                { "QUIT", hl = "AstroDashboardAction", width = 18 },
+                { "[Q]", hl = "AstroDashboardActionKey" },
               },
             },
           },
         },
         sections = {
           { section = "header", padding = { 1, 1 } },
-          {
-            align = "center",
-            text = {
-              { "UNITY / CSHARP / LUA", hl = "SnacksDashboardFooter" },
-            },
-            padding = 0,
-          },
           { section = "keys", gap = 0, padding = 0 },
-          {
-            title = "RECENT",
-            section = "recent_files",
-            limit = 5,
-            padding = { 1, 0 },
-          },
+          function()
+            local items = Snacks.dashboard.sections.recent_files({ limit = 5 })()
+
+            for _, item in ipairs(items) do
+              item.icon = nil
+            end
+
+            table.insert(items, 1, { title = "RECENT" })
+            items.padding = { 1, 0 }
+
+            return items
+          end,
           function()
             local stats = require("lazy.stats").stats()
             local ms = math.floor(stats.startuptime * 100 + 0.5) / 100
