@@ -156,6 +156,33 @@ return {
           end,
         },
       },
+      picker = {
+        icons = {
+          files = {
+            enabled = false,
+          },
+        },
+        layout = {
+          config = function(layout)
+            local function square_borders(box)
+              if type(box) ~= "table" then
+                return
+              end
+
+              if box.border == true or box.border == "rounded" then
+                box.border = "single"
+              end
+
+              for _, child in ipairs(box) do
+                square_borders(child)
+              end
+            end
+
+            square_borders(layout.layout)
+            return layout
+          end,
+        },
+      },
     },
   },
 }
