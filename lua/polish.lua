@@ -66,4 +66,19 @@ vim.api.nvim_create_autocmd({ "ColorScheme", "UIEnter" }, {
   callback = apply_glass_highlights,
 })
 
+vim.cmd([[
+  silent! aunmenu PopUp.Inspect
+  silent! aunmenu PopUp.Paste
+  silent! aunmenu PopUp.Select\ All
+  silent! aunmenu PopUp.How-to\ disable\ mouse
+
+  anoremenu PopUp.INSPECT                 <Cmd>Inspect<CR>
+  anoremenu PopUp.PASTE                   "+gP
+  vnoremenu PopUp.PASTE                   "+P
+  nnoremenu PopUp.SELECT\ ALL             ggVG
+  vnoremenu PopUp.SELECT\ ALL             gg0oG$
+  inoremenu PopUp.SELECT\ ALL             <C-Home><C-O>VG
+  anoremenu PopUp.HOW-TO\ DISABLE\ MOUSE  <Cmd>help disable-mouse<CR>
+]])
+
 vim.schedule(apply_glass_highlights)
