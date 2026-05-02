@@ -11,6 +11,9 @@ return {
           },
         },
         components = {
+          file_info = {
+            file_icon = false,
+          },
           git_branch = {
             git_branch = { icon = { kind = "NONE", padding = { right = 0 } } },
           },
