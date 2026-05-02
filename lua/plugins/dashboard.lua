@@ -157,6 +157,10 @@ return {
         },
       },
       picker = {
+        config = function(opts)
+          opts.title = (opts.title or Snacks.picker.util.title(opts.source or "search")):upper()
+          return opts
+        end,
         icons = {
           files = {
             enabled = false,
