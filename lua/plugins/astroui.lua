@@ -17,6 +17,9 @@ return {
           git_branch = {
             git_branch = { icon = { kind = "NONE", padding = { right = 0 } } },
           },
+          treesitter = {
+            str = { str = "TS", icon = { kind = "NONE", padding = { right = 0 } } },
+          },
           separated_path = {
             path_func = function(self)
               local path = require("astroui.status").provider.unique_path()(self)

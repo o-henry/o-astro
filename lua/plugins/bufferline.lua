@@ -5,6 +5,26 @@ return {
       opts.tabline = nil
       opts.winbar = nil
     end,
+    config = function(_, opts)
+      local function uppercase_providers(component)
+        if type(component) ~= "table" then return end
+
+        if type(component.provider) == "function" then
+          local provider = component.provider
+          component.provider = function(...)
+            local text = provider(...)
+            return type(text) == "string" and text:upper() or text
+          end
+        end
+
+        for _, child in pairs(component) do
+          uppercase_providers(child)
+        end
+      end
+
+      uppercase_providers(opts.statusline)
+      require("heirline").setup(opts)
+    end,
   },
   {
     "akinsho/bufferline.nvim",
